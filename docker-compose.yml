@@ -5,17 +5,23 @@ version: "3.4"
 
 services:
   api:
-    container_name: LibreChat
+    container_name: LibreChat-App
     ports:
       - "${PORT}:${PORT}"
     #depends_on:
     #  - mongodb
     #  - rag_api
-    image: ghcr.io/danny-avila/librechat-dev:latest
+    #image: ghcr.io/danny-avila/librechat-dev:latest
+    image: librechat
+    build:
+      context: ../..
+      target: node
     restart: always
     user: "${UID}:${GID}"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    env_file:
+      - ../../.env
     environment:
       - HOST=0.0.0.0
       #- MONGO_URI=mongodb://mongodb:27017/LibreChat
